@@ -1,5 +1,4 @@
-numpy
 black
-flake8
 isort
+flake8
 mypy
