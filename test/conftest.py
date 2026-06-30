@@ -17,7 +17,7 @@ from app.models import Client, ClientParking, Parking
 from factories import ClientFactory, ParkingFactory
 
 
-@pytest.fixture(scope='session')
+@pytest.fixture(scope="session")
 def app():
     app = create_app(TestingConfig)
     with app.app_context():
@@ -26,12 +26,12 @@ def app():
         db.drop_all()
 
 
-@pytest.fixture(scope='session')
+@pytest.fixture(scope="session")
 def client(app):
     return app.test_client()
 
 
-@pytest.fixture(scope='function')
+@pytest.fixture(scope="function")
 def db_session(app):
     with app.app_context():
         # Clean up any existing data
@@ -42,17 +42,17 @@ def db_session(app):
 
         # Create test data
         test_client = Client(
-            name='John',
-            surname='Doe',
-            credit_card='1234567890123456',
-            car_number='ABC123'
+            name="John",
+            surname="Doe",
+            credit_card="1234567890123456",
+            car_number="ABC123",
         )
 
         test_parking = Parking(
-            address='Test Street 123',
+            address="Test Street 123",
             opened=True,
             count_places=10,
-            count_available_places=8
+            count_available_places=8,
         )
 
         db.session.add(test_client)
@@ -64,7 +64,7 @@ def db_session(app):
             client_id=test_client.id,
             parking_id=test_parking.id,
             time_in=datetime.now() - timedelta(hours=2),
-            time_out=datetime.now() - timedelta(hours=1)
+            time_out=datetime.now() - timedelta(hours=1),
         )
 
         db.session.add(test_log)
@@ -78,8 +78,8 @@ def db_session(app):
         db.create_all()
 
 
-@pytest.fixture(scope='function')
+@pytest.fixture(scope="function")
 def test_data(db_session):
     client = Client.query.first()
     parking = Parking.query.first()
-    return {'client': client, 'parking': parking}
+    return {"client": client, "parking": parking}
