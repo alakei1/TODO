@@ -42,12 +42,11 @@ jobs:
 
       - name: Type checking (mypy)
         run: |
-    if [ -n "$(find . -maxdepth 2 -name "*.py" -not -path "*/.*")" ]; then
-      export MYPYPATH=.
-      mypy --explicit-package-bases --ignore-missing-imports .
-    else
-      echo "Python-файлы не найдены. Пропуск проверки типов."
-    fi
+          if [ -n "$(find . -maxdepth 2 -name '*.py' -not -path '*/.*')" ]; then
+            mypy --ignore-missing-imports .
+          else
+            echo "Python-файлы не найдены. Пропуск проверки типов."
+          fi
 
       - name: Execute Unittests
         run: python -m unittest discover -s . -p "test_*.py"
