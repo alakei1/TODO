@@ -43,7 +43,10 @@ jobs:
 
     
       - name: Type checking (mypy)
-        run: mypy --ignore-missing-imports .
+        run: |
+          export MYPYPATH=.
+          mypy --explicit-package-bases --ignore-missing-imports .
+
 
     
       - name: Execute Unittests
