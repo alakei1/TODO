@@ -41,7 +41,12 @@ jobs:
           flake8 . --count --exit-zero --max-line-length=88 --statistics
 
       - name: Type checking (mypy)
-        run: mypy --ignore-missing-imports --pass-no-files .
+        run: |
+          if [ -n "$(find . -maxdepth 2 -name '*.py' -not -path '*/.*')" ]; then
+            mypy --ignore-missing-imports .
+          else
+            echo "Python-файлы не найдены. Пропуск проверки типов."
+          fi
 
       - name: Execute Unittests
         run: python -m unittest discover -s . -p "test_*.py"
