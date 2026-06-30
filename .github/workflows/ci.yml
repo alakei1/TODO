@@ -35,16 +35,19 @@ jobs:
       - name: Check code formatting (black)
         run: black --check .
 
-     
       - name: Lint for syntax errors (flake8)
         run: |
           flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
           flake8 . --count --exit-zero --max-line-length=88 --statistics
 
-    
       - name: Type checking (mypy)
-        run: mypy --ignore-missing-imports .
+        run: |
+          if [ -n "$(find . -maxdepth 2 -name '*.py' -not -path '*/.*')" ]; then
+            mypy --ignore-missing-imports .
+          else
+            echo "Python-файлы не найдены. Пропуск проверки типов."
+          fi
 
-    
       - name: Execute Unittests
         run: python -m unittest discover -s . -p "test_*.py"
+
