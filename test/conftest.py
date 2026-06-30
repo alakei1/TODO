@@ -1,18 +1,20 @@
-import sys
 import os
+import sys
 from pathlib import Path
 
 # Добавляем корневую директорию в PYTHONPATH
 root_dir = Path(__file__).parent.parent
 sys.path.insert(0, str(root_dir))
 
+from datetime import datetime, timedelta
+
 import pytest
+
 from app import create_app
 from app.config import TestingConfig
 from app.extensions import db
-from app.models import Client, Parking, ClientParking
+from app.models import Client, ClientParking, Parking
 from factories import ClientFactory, ParkingFactory
-from datetime import datetime, timedelta
 
 
 @pytest.fixture(scope='session')

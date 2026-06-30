@@ -1,5 +1,4 @@
-from module_29_testing.hw.app import create_app
-from module_29_testing.hw.app import db
+from module_29_testing.hw.app import create_app, db
 
 app = create_app()
 
