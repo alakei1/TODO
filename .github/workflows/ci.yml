@@ -10,9 +10,16 @@ jobs:
   code-verification:
     runs-on: ubuntu-latest
 
+   
+    permissions:
+      contents: write
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+        
+          ref: ${{ github.head_ref || github.ref_name }}
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -24,11 +31,19 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Check imports order (isort)
-        run: isort --check-only --profile black .
+    
+      - name: Fix imports order (isort)
+        run: isort --profile black .
 
-      - name: Check code formatting (black)
-        run: black --check .
+     
+      - name: Fix code formatting (black)
+        run: black .
+
+      
+      - name: Commit formatting changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "style: autoformat code with black & isort"
 
       - name: Lint for syntax errors (flake8)
         run: |
@@ -38,7 +53,6 @@ jobs:
       - name: Type checking (mypy)
         run: |
           if [ -n "$(find . -maxdepth 2 -name "*.py" -not -path "*/.*")" ]; then
-            # Передаем конкретные папки вместо точки, чтобы mypy не падал
             mypy --explicit-package-bases --ignore-missing-imports app test
           else
             echo "Python-файлы не найдены. Пропуск проверки типов."
@@ -46,5 +60,3 @@ jobs:
 
       - name: Execute Unittests
         run: python -m unittest discover -s . -p "test_*.py"
-
-
