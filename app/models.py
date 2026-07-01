@@ -1,15 +1,9 @@
 from datetime import datetime
-from typing import TYPE_CHECKING
 
 from app.extensions import db
 
-if TYPE_CHECKING:
-    from flask_sqlalchemy.model import Model
-else:
-    Model = db.Model
 
-
-class Client(db.Model):
+class Client(db.Model):  # type: ignore[name-defined]
     __tablename__ = "client"
 
     id = db.Column(db.Integer, primary_key=True)
@@ -30,7 +24,7 @@ class Client(db.Model):
         }
 
 
-class Parking(db.Model):
+class Parking(db.Model):  # type: ignore[name-defined]
     __tablename__ = "parking"
 
     id = db.Column(db.Integer, primary_key=True)
@@ -51,7 +45,7 @@ class Parking(db.Model):
         }
 
 
-class ClientParking(db.Model):
+class ClientParking(db.Model):  # type: ignore[name-defined]
     __tablename__ = "client_parking"
 
     id = db.Column(db.Integer, primary_key=True)
