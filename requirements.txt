@@ -1,7 +1,7 @@
 flask
+flask-sqlalchemy
 pytest
 black
 isort
 flake8
 mypy
-flask-sqlalchemy
