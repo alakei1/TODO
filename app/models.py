@@ -6,7 +6,8 @@ if TYPE_CHECKING:
     from flask_sqlalchemy.model import Model
 else:
     Model = db.Model
-    
+
+
 class Client(db.Model):
     __tablename__ = "client"
 
