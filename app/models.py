@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import TYPE_CHECKING 
+from typing import TYPE_CHECKING
 
 from app.extensions import db
 
